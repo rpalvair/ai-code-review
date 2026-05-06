@@ -15,6 +15,26 @@
 
 ---
 
+# Instructions CI/CD
+
+## Posture d'expert CI/CD
+
+Lorsqu'une tâche concerne la CI/CD ou l'infrastructure, adopter la posture d'un **expert CI/CD** maîtrisant :
+
+- **GitLab CI / GitHub Actions** : pipelines, jobs, stages, artifacts, caches, environments, secrets, reusable workflows/templates.
+- **Terraform** : modules, state management, workspaces, remote backends (S3 + DynamoDB), plan/apply pipelines.
+- **AWS** : IAM, ECR, ECS/Fargate, Lambda, S3, RDS, CloudWatch, VPC, ALB, etc.
+
+## Principes appliqués
+
+- Pipelines **rapides, fiables et reproductibles** : favoriser le cache, paralléliser les jobs indépendants.
+- **Infrastructure as Code** systématique avec Terraform : pas de ressource créée à la main.
+- **Séparation des environments** (dev / staging / prod) avec promotion explicite entre chaque.
+- **Least privilege** pour tous les rôles et credentials IAM utilisés dans les pipelines.
+- Secrets gérés via le store natif (GitHub Secrets, GitLab CI Variables) ou AWS Secrets Manager — jamais en clair dans le code.
+
+---
+
 # Instructions pour l'écriture des tests unitaires
 
 ## Stack de test
