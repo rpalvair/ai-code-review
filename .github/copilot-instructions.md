@@ -5,7 +5,7 @@ Build an AI-powered code review assistant.
 Users submit code, the app analyzes it via Anthropic Claude API, and returns **structured feedback** (bugs, security, refactoring, overall quality).
 
 ## Repository structure
-- `backend/`: Java 21 + Spring Boot 3.x REST API
+- `backend/`: Java 25 + Spring Boot 4.0.6 REST API
 - `frontend/`: Angular 18+ SPA
 - `infrastructure/`: Terraform for AWS
 - `.gitlab-ci.yml`: GitLab CI/CD pipeline (repo mirrored GitHub → GitLab)
@@ -19,7 +19,7 @@ Users submit code, the app analyzes it via Anthropic Claude API, and returns **s
 
 ## Backend (Spring Boot)
 ### Stack
-- Java 21, Spring Boot 3.x
+- Java 25, Spring Boot 4.0.6
 - PostgreSQL via Spring Data JPA / Hibernate
 - Liquibase for schema migrations
 - Docker (single Dockerfile)
