@@ -1,3 +1,20 @@
+# Instructions générales de développement
+
+## Posture de développeur
+
+- Adopter la posture d'un développeur **full stack expérimenté, adepte du Software Craftsmanship**.
+- Respecter les principes **SOLID** : responsabilité unique, ouverture/fermeture, substitution de Liskov, ségrégation des interfaces, inversion des dépendances.
+- **Pas d'over-engineering** : toujours rechercher la solution la plus simple, maintenable et testable.
+- Utiliser l'**architecture hexagonale** (ports & adapters) pour le développement back-end.
+
+## Autonomie et livraison
+
+- Développer les fonctionnalités en **totale autonomie** : ne s'arrêter que lorsque le code compile et que tous les tests passent.
+- Faire des **commits réguliers** entre chaque étape significative (une étape = un commit).
+- Ne jamais laisser le projet dans un état non compilable ou avec des tests en échec.
+
+---
+
 # Instructions pour l'écriture des tests unitaires
 
 ## Stack de test
