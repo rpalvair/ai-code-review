@@ -63,7 +63,45 @@ Chaque test suit **Arrange / Act / Assert** — le code doit être suffisamment 
 
 1. **Un test = un comportement** — ne pas vérifier plusieurs comportements distincts dans le même test.
 2. **Pas de logique dans les tests** — pas de `if`, `for`, ni de variables intermédiaires inutiles.
-3. **Données de test inline** — construire les objets directement dans le test, sans factories partagées sauf si la duplication est significative.
+3. **Données de test inline par défaut** — construire les objets directement dans le test.
+   Si la duplication devient significative (même objet construit dans 3 tests ou plus),
+   centraliser dans une **classe de Fixtures** dédiée (ex. `ReviewFixtures`, `AnthropicResponseFixtures`)
+   avec des méthodes factory statiques ou un **pattern Builder** pour les objets nécessitant des variantes.
+
+   ```java
+   // ReviewFixtures.java
+   class ReviewFixtures {
+
+       static ReviewRequest aValidReviewRequest() {
+           return new ReviewRequestBuilder().build();
+       }
+
+       static class ReviewRequestBuilder {
+           private String code = "public class Foo {}";
+
+           ReviewRequestBuilder withCode(String code) {
+               this.code = code;
+               return this;
+           }
+
+           ReviewRequest build() {
+               return new ReviewRequest(code);
+           }
+       }
+   }
+   ```
+
+   Usage dans les tests :
+   ```java
+   // Cas nominal — valeurs par défaut
+   var request = ReviewFixtures.aValidReviewRequest();
+
+   // Cas limite — surcharge d'un seul champ
+   var request = new ReviewFixtures.ReviewRequestBuilder()
+       .withCode("")
+       .build();
+   ```
+
 4. **Mocks limités au strict nécessaire** — ne mocker que les dépendances externes (ports, HTTP), pas les records ni les mappers purs.
 5. **Pas de `@BeforeEach` sauf pour MockMvc** — préférer l'initialisation directe dans chaque test.
 
