@@ -4,6 +4,7 @@ import com.iacodereview.domain.model.CodeAnalysis;
 import com.iacodereview.domain.model.Review;
 import com.iacodereview.domain.port.in.ReviewCodeUseCase;
 import com.iacodereview.infrastructure.exception.BadResponseException;
+import com.iacodereview.infrastructure.exception.ResponseParsingException;
 import com.iacodereview.infrastructure.web.dto.AnalysisResponse;
 import com.iacodereview.infrastructure.web.dto.ReviewResponse;
 import org.junit.jupiter.api.Test;
@@ -130,6 +131,23 @@ class ReviewControllerTest {
                                 {"code": "x = 1", "language": "python"}
                                 """))
                 .andExpect(status().isBadRequest());
+
+        verify(reviewCodeUseCase).execute(code, language);
+    }
+
+    @Test
+    void review_returns500_whenResponseParsingExceptionIsThrown() throws Exception {
+        final String language = "python";
+        final String code = "x = 1";
+        doThrow(new ResponseParsingException("Oups", new RuntimeException("Voici la cause"))).when(reviewCodeUseCase).execute(code, language);
+
+        mockMvc.perform(post("/api/review")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"code": "x = 1", "language": "python"}
+                                """))
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.message").value("Oups"));
 
         verify(reviewCodeUseCase).execute(code, language);
     }

@@ -6,6 +6,7 @@ import com.iacodereview.infrastructure.ai.config.AnthropicRestClientBuilder;
 import com.iacodereview.infrastructure.ai.dto.AnalysisPayload;
 import com.iacodereview.infrastructure.ai.dto.AnthropicResponse;
 import com.iacodereview.infrastructure.exception.BadResponseException;
+import com.iacodereview.infrastructure.exception.ResponseParsingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -55,8 +56,8 @@ public class AnthropicAiAdapter implements AiReviewPort {
         try {
             AnalysisPayload dto = objectMapper.readValue(json, AnalysisPayload.class);
             return codeAnalysisMapper.toDomain(dto);
-        } catch (Exception e) {
-            throw new IllegalStateException("Impossible de parser la réponse Claude : " + json, e);
+        } catch (Exception ex) {
+            throw new ResponseParsingException("Impossible de parser la réponse Claude", ex);
         }
     }
 }
