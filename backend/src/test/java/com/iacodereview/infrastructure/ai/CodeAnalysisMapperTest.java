@@ -40,7 +40,7 @@ class CodeAnalysisMapperTest {
         assertThat(result.bugs()).isEmpty();
         assertThat(result.security()).isEmpty();
         assertThat(result.refactoring()).isEmpty();
-        assertThat(result.quality()).isEqualTo("quality");
+        assertThat(result.quality()).isEqualTo("Code propre");
         assertThat(result.score()).isEqualTo(9);
     }
 }

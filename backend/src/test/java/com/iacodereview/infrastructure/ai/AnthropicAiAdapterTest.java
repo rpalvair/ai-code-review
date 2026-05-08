@@ -5,6 +5,7 @@ import com.iacodereview.infrastructure.ai.config.AnthropicRestClientBuilder;
 import com.iacodereview.infrastructure.ai.dto.AnalysisPayload;
 import com.iacodereview.infrastructure.ai.dto.AnthropicResponse;
 import com.iacodereview.infrastructure.exception.BadResponseException;
+import com.iacodereview.infrastructure.exception.ResponseParsingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -93,7 +94,7 @@ class AnthropicAiAdapterTest {
         when(postSpec.body(DUMMY_BODY)).thenReturn(bodySpec);
 
         assertThatThrownBy(() -> adapter.analyzeCode("code", "java"))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(ResponseParsingException.class)
                 .hasMessageContaining("Impossible de parser la réponse Claude");
     }
 
