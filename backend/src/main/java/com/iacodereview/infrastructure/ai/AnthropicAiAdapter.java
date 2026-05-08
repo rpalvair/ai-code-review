@@ -1,63 +1,54 @@
 package com.iacodereview.infrastructure.ai;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
-
 import com.iacodereview.domain.model.CodeAnalysis;
 import com.iacodereview.domain.port.out.AiReviewPort;
-import com.iacodereview.infrastructure.ai.config.AnthropicProperties;
 import com.iacodereview.infrastructure.ai.config.AnthropicRestClientBuilder;
 import com.iacodereview.infrastructure.ai.dto.AnalysisPayload;
 import com.iacodereview.infrastructure.ai.dto.AnthropicResponse;
-
+import com.iacodereview.infrastructure.exception.BadResponseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import tools.jackson.databind.ObjectMapper;
+
+import java.util.Map;
+import java.util.Optional;
 
 @Component
 public class AnthropicAiAdapter implements AiReviewPort {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AnthropicAiAdapter.class);
+
     private final AnthropicRestClientBuilder restClientBuilder;
-    private final AnthropicProperties anthropicProperties;
     private final CodeAnalysisMapper codeAnalysisMapper;
     private final ObjectMapper objectMapper;
-    private final String systemPrompt;
+    private final RequestBodyBuilder requestBodyBuilder;
 
-    public AnthropicAiAdapter(
-            AnthropicRestClientBuilder restClientBuilder,
-            AnthropicProperties anthropicProperties,
-            CodeAnalysisMapper feedbackMapper,
-            @Value("classpath:prompts/system-prompt.txt") Resource systemPromptResource,
-            ObjectMapper objectMapper
-    ) throws IOException {
+    public AnthropicAiAdapter(AnthropicRestClientBuilder restClientBuilder,
+                              CodeAnalysisMapper codeAnalysisMapper,
+                              ObjectMapper objectMapper,
+                              RequestBodyBuilder requestBodyBuilder) {
         this.restClientBuilder = restClientBuilder;
-        this.anthropicProperties = anthropicProperties;
-        this.codeAnalysisMapper = feedbackMapper;
+        this.requestBodyBuilder = requestBodyBuilder;
+        this.codeAnalysisMapper = codeAnalysisMapper;
         this.objectMapper = objectMapper;
-        this.systemPrompt = systemPromptResource.getContentAsString(StandardCharsets.UTF_8);
     }
 
     @Override
     public CodeAnalysis analyzeCode(String code, String language) {
-        String userMessage = "Langage : " + language + "\n\nCode :\n" + code;
-
-        Map<String, Object> requestBody = Map.of(
-                "model", anthropicProperties.model(),
-                "max_tokens", anthropicProperties.maxTokens(),
-                "system", systemPrompt,
-                "messages", List.of(Map.of("role", "user", "content", userMessage))
-        );
-
-        AnthropicResponse response = restClientBuilder.get().post()
+        var messageContent = "Langage: %s\nCode:\n%s".formatted(language, code);
+        LOGGER.info("messageContent = {}", messageContent);
+        final Map<String, Object> requestBody = requestBodyBuilder.buildRequestBody(messageContent);
+        LOGGER.info("Body de la requete = {}", requestBody);
+        AnthropicResponse response = restClientBuilder.restClient().post()
                 .body(requestBody)
                 .retrieve()
                 .body(AnthropicResponse.class);
-
-        return parseAnalysis(response.firstText());
+        LOGGER.info("Response = {}", response);
+        return Optional.ofNullable(response)
+                .map(AnthropicResponse::firstText)
+                .map(this::parseAnalysis)
+                .orElseThrow(() -> new BadResponseException("Reponse invalide"));
     }
 
     private CodeAnalysis parseAnalysis(String json) {

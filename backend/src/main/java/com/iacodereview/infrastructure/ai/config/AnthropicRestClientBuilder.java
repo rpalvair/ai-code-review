@@ -9,16 +9,17 @@ public class AnthropicRestClientBuilder {
 
     private final RestClient restClient;
 
-    public AnthropicRestClientBuilder(AnthropicProperties anthropicProperties) {
-        this.restClient = RestClient.builder()
-                .baseUrl(anthropicProperties.apiUrl())
-                .defaultHeader("x-api-key", anthropicProperties.apiKey())
-                .defaultHeader("anthropic-version", anthropicProperties.apiVersion())
+    public AnthropicRestClientBuilder(AnthropicProperties properties,
+                                      RestClient.Builder builder) {
+        this.restClient = builder
+                .baseUrl(properties.apiUrl())
+                .defaultHeader("x-api-key", properties.apiKey())
+                .defaultHeader("anthropic-version", properties.apiVersion())
                 .defaultHeader("content-type", MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }
 
-    public RestClient get() {
+    public RestClient restClient() {
         return restClient;
     }
 }
