@@ -1,11 +1,11 @@
-package com.iacodereview.infrastructure.ai.dto;
+package com.iacodereview.infrastructure.ai.anthropic.dto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 
-import com.iacodereview.infrastructure.ai.anthropic.dto.AnthropicResponse;
+import com.iacodereview.infrastructure.exception.BadResponseException;
 import org.junit.jupiter.api.Test;
 
 class AnthropicResponseTest {
@@ -35,13 +35,13 @@ class AnthropicResponseTest {
     }
 
     @Test
-    void firstText_throwsIllegalStateException_whenNoTextBlock() {
+    void firstText_throwsBadResponseException_whenNoTextBlock() {
         var response = new AnthropicResponse(List.of(
                 new AnthropicResponse.ContentBlock("tool_use", null)
         ));
 
         assertThatThrownBy(response::firstText)
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(BadResponseException.class)
                 .hasMessageContaining("Aucun bloc texte dans la réponse Anthropic");
     }
 }

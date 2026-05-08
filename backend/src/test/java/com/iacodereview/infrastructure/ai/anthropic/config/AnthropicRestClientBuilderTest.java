@@ -1,7 +1,5 @@
-package com.iacodereview.infrastructure.ai.config;
+package com.iacodereview.infrastructure.ai.anthropic.config;
 
-import com.iacodereview.infrastructure.ai.anthropic.config.AnthropicProperties;
-import com.iacodereview.infrastructure.ai.anthropic.config.AnthropicRestClientBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -34,5 +32,4 @@ class AnthropicRestClientBuilderTest {
 
         mockServer.verify();
     }
-
 }

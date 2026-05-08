@@ -1,6 +1,5 @@
-package com.iacodereview.infrastructure.ai;
+package com.iacodereview.infrastructure.ai.anthropic;
 
-import com.iacodereview.infrastructure.ai.anthropic.RequestBodyBuilder;
 import com.iacodereview.infrastructure.ai.anthropic.config.AnthropicProperties;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,5 +51,4 @@ class RequestBodyBuilderTest {
                 .containsEntry("role", "user")
                 .containsEntry("content", "dummyMessage");
     }
-
 }

@@ -1,5 +1,7 @@
 package com.iacodereview.infrastructure.ai.anthropic.dto;
 
+import com.iacodereview.infrastructure.exception.BadResponseException;
+
 import java.util.List;
 
 public record AnthropicResponse(List<ContentBlock> content) {
@@ -11,6 +13,6 @@ public record AnthropicResponse(List<ContentBlock> content) {
                 .filter(b -> "text".equals(b.type()))
                 .findFirst()
                 .map(ContentBlock::text)
-                .orElseThrow(() -> new IllegalStateException("Aucun bloc texte dans la réponse Anthropic"));
+                .orElseThrow(() -> new BadResponseException("Aucun bloc texte dans la réponse Anthropic"));
     }
 }
