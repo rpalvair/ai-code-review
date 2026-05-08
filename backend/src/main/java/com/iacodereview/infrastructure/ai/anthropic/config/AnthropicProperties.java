@@ -1,4 +1,4 @@
-package com.iacodereview.infrastructure.ai.config;
+package com.iacodereview.infrastructure.ai.anthropic.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.bind.DefaultValue;

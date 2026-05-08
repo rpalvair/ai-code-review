@@ -1,4 +1,4 @@
-package com.iacodereview.application;
+package com.iacodereview.domain.service;
 
 import java.time.Instant;
 import java.util.UUID;

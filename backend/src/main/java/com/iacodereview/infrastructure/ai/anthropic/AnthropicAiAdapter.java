@@ -1,10 +1,11 @@
-package com.iacodereview.infrastructure.ai;
+package com.iacodereview.infrastructure.ai.anthropic;
 
 import com.iacodereview.domain.model.CodeAnalysis;
 import com.iacodereview.domain.port.out.AiReviewPort;
-import com.iacodereview.infrastructure.ai.config.AnthropicRestClientBuilder;
+import com.iacodereview.infrastructure.ai.CodeAnalysisMapper;
+import com.iacodereview.infrastructure.ai.anthropic.config.AnthropicRestClientBuilder;
 import com.iacodereview.infrastructure.ai.dto.AnalysisPayload;
-import com.iacodereview.infrastructure.ai.dto.AnthropicResponse;
+import com.iacodereview.infrastructure.ai.anthropic.dto.AnthropicResponse;
 import com.iacodereview.infrastructure.exception.BadResponseException;
 import com.iacodereview.infrastructure.exception.ResponseParsingException;
 import org.slf4j.Logger;

@@ -6,9 +6,9 @@ import com.iacodereview.domain.model.CodeAnalysis;
 import com.iacodereview.infrastructure.ai.dto.AnalysisPayload;
 
 @Component
-class CodeAnalysisMapper {
+public class CodeAnalysisMapper {
 
-    CodeAnalysis toDomain(AnalysisPayload dto) {
+    public CodeAnalysis toDomain(AnalysisPayload dto) {
         return new CodeAnalysis(dto.bugs(), dto.security(), dto.refactoring(), dto.quality(), dto.score());
     }
 }

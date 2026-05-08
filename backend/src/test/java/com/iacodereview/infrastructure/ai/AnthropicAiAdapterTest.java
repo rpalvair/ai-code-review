@@ -1,9 +1,11 @@
 package com.iacodereview.infrastructure.ai;
 
 import com.iacodereview.domain.model.CodeAnalysis;
-import com.iacodereview.infrastructure.ai.config.AnthropicRestClientBuilder;
+import com.iacodereview.infrastructure.ai.anthropic.AnthropicAiAdapter;
+import com.iacodereview.infrastructure.ai.anthropic.RequestBodyBuilder;
+import com.iacodereview.infrastructure.ai.anthropic.config.AnthropicRestClientBuilder;
 import com.iacodereview.infrastructure.ai.dto.AnalysisPayload;
-import com.iacodereview.infrastructure.ai.dto.AnthropicResponse;
+import com.iacodereview.infrastructure.ai.anthropic.dto.AnthropicResponse;
 import com.iacodereview.infrastructure.exception.BadResponseException;
 import com.iacodereview.infrastructure.exception.ResponseParsingException;
 import org.junit.jupiter.api.BeforeEach;

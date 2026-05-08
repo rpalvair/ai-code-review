@@ -1,6 +1,7 @@
 package com.iacodereview.infrastructure.ai;
 
-import com.iacodereview.infrastructure.ai.config.AnthropicProperties;
+import com.iacodereview.infrastructure.ai.anthropic.RequestBodyBuilder;
+import com.iacodereview.infrastructure.ai.anthropic.config.AnthropicProperties;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

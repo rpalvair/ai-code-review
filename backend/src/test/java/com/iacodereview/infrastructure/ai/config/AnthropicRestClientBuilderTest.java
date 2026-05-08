@@ -1,8 +1,8 @@
 package com.iacodereview.infrastructure.ai.config;
 
+import com.iacodereview.infrastructure.ai.anthropic.config.AnthropicProperties;
+import com.iacodereview.infrastructure.ai.anthropic.config.AnthropicRestClientBuilder;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;

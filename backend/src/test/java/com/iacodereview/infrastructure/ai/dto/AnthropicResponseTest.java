@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 
+import com.iacodereview.infrastructure.ai.anthropic.dto.AnthropicResponse;
 import org.junit.jupiter.api.Test;
 
 class AnthropicResponseTest {

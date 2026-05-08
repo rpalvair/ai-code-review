@@ -1,6 +1,6 @@
-package com.iacodereview.infrastructure.ai;
+package com.iacodereview.infrastructure.ai.anthropic;
 
-import com.iacodereview.infrastructure.ai.config.AnthropicProperties;
+import com.iacodereview.infrastructure.ai.anthropic.config.AnthropicProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;

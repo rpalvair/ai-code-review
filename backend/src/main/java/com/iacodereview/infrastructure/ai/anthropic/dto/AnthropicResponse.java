@@ -1,4 +1,4 @@
-package com.iacodereview.infrastructure.ai.dto;
+package com.iacodereview.infrastructure.ai.anthropic.dto;
 
 import java.util.List;
 
